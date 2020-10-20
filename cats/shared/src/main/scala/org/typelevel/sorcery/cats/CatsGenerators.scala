@@ -86,11 +86,11 @@ trait ApplicativeErrorGenerators[F[_], E] extends ApplicativeGenerators[F] {
       "raiseError" -> genRaiseError[A]
     ) ++ super.baseGen[A]
 
-  override protected def recursiveGen[A](
-      deeper: GenK[F])(implicit AA: Arbitrary[A], AC: Cogen[A]): List[(String, Gen[F[A]])] =
+  override protected def recursiveGen[A: Arbitrary: Cogen](
+      deeper: GenK[F]): List[(String, Gen[F[A]])] =
     List(
-      "handleErrorWith" -> genHandleErrorWith[A](deeper)(AA, AC)
-    ) ++ super.recursiveGen(deeper)(AA, AC)
+      "handleErrorWith" -> genHandleErrorWith[A](deeper)
+    ) ++ super.recursiveGen[A](deeper)
 
   private def genRaiseError[A]: Gen[F[A]] =
     arbitrary[E].map(F.raiseError[A](_))

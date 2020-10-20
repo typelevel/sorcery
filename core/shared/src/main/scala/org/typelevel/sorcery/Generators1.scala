@@ -51,6 +51,16 @@ trait Generators1[F[_]] {
     Gen.oneOf(SortedMap(gens: _*).map(_._2)).flatMap(identity)
   }
 
-  //All generators possible at depth 0 - the only public method
+  //All generators possible at depth 0 - the main public method
   def generators[A: Arbitrary: Cogen]: Gen[F[A]] = gen[A](0)
+
+  ///////////////////////////
+  ///////////////////////////
+  // watch this: new thing //
+  ///////////////////////////
+  ///////////////////////////
+  object arbitary {
+    implicit def arbitraryGenerators1[A: Arbitrary: Cogen]: Arbitrary[F[A]] =
+      Arbitrary(generators[A])
+  }
 }
