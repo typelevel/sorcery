@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package cats.effect.testkit
+package org.typelevel.sorcery
 
-import org.scalacheck.{Arbitrary, Cogen, Gen}
+import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
 
 import scala.collection.immutable.SortedMap
 

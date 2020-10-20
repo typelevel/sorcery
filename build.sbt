@@ -92,11 +92,12 @@ lazy val root = project.in(file(".")).aggregate(rootJVM, rootJS).settings(noPubl
 
 lazy val rootJVM = project
   .aggregate(
-    core.jvm /* , testkit.jvm, laws.jvm, core.jvm, std.jvm, example.jvm, benchmarks */ )
+    core.jvm,
+    cats.jvm /* , testkit.jvm, laws.jvm, core.jvm, std.jvm, example.jvm, benchmarks */ )
   .settings(noPublishSettings)
 
 lazy val rootJS = project
-  .aggregate(core.js /* , testkit.js, laws.js, core.js, std.js, example.js */ )
+  .aggregate(core.js, cats.js /* , testkit.js, laws.js, core.js, std.js, example.js */ )
   .settings(noPublishSettings)
 
 // /**
@@ -112,6 +113,15 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
       /* "org.specs2" %%% "specs2-core" % Specs2Version */ ))
   .settings(dottyLibrarySettings)
 
+lazy val cats = crossProject(JSPlatform, JVMPlatform)
+  .in(file("cats"))
+  .settings(
+    name := "sorcery-core",
+    libraryDependencies ++= Seq(
+      "org.typelevel" %%% "cats-core" % CatsVersion,
+      "org.scalacheck" %%% "scalacheck" % "1.14.3"))
+  .settings(dottyLibrarySettings)
+  .dependsOn(core)
 // /**
 //  * Reference implementations (including a pure ConcurrentBracket), generic ScalaCheck
 //  * generators, and useful tools for testing code written against Cats Effect.
