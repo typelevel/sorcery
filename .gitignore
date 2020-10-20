@@ -1,0 +1,18 @@
+target/
+
+.sbtopts
+
+# vim
+*.sw?
+
+# intellij
+.idea/
+
+# Ignore [ce]tags files
+tags
+
+# Metals
+.metals/
+.bsp/
+.bloop/
+metals.sbt
