@@ -116,7 +116,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
 lazy val cats = crossProject(JSPlatform, JVMPlatform)
   .in(file("cats"))
   .settings(
-    name := "sorcery-core",
+    name := "sorcery-cats",
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "cats-core" % CatsVersion,
       "org.scalacheck" %%% "scalacheck" % "1.14.3"))
