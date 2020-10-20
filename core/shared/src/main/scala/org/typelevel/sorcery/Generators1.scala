@@ -54,13 +54,18 @@ trait Generators1[F[_]] {
   //All generators possible at depth 0 - the main public method
   def generators[A: Arbitrary: Cogen]: Gen[F[A]] = gen[A](0)
 
+  def compile: GenK[F] =
+    new GenK[F] {
+      def apply[A: Arbitrary: Cogen]: Gen[F[A]] = generators[A]
+    }
+
   ///////////////////////////
   ///////////////////////////
   // watch this: new thing //
   ///////////////////////////
   ///////////////////////////
   object arbitary {
-    implicit def arbitraryGenerators1[A: Arbitrary: Cogen]: Arbitrary[F[A]] =
+    implicit def arbitraryFromGenerators1[A: Arbitrary: Cogen]: Arbitrary[F[A]] =
       Arbitrary(generators[A])
   }
 }
